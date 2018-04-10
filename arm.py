@@ -5,6 +5,8 @@ import RoboPiLib as RPL
 motor1 = 1
 #left and right
 motor2 = 0
+#to allow for interval turning
+turn = 800
 #tells the commands
 print "press w to go down, press s to go up,"
 print "a to go left, d to go right,"
@@ -29,7 +31,10 @@ while z is 0:
         future = 1 + now
         #starts motor running
         while v is 1 and now < future:
-            run(RPL.servoWrite(motor2, 800))
+            turn = turn + 600
+            if turn > 3000:
+                turn = 800
+            run(RPL.servoWrite(motor2, turn))
             print "insert new input, then wait one second before entering another"
             #breaks loop
             v = 2
@@ -43,7 +48,10 @@ while z is 0:
         future = 1 + now
         #starts motor running
         while v is 1 and now < future:
-            run(RPL.servoWrite(motor2, 3000))
+            turn = turn - 600
+            if turn < 800:
+                turn = 3000
+            run(RPL.servoWrite(motor2, turn))
             print "insert new input, then wait one second before entering another"
             #breaks loop
             v = 2
@@ -52,7 +60,7 @@ while z is 0:
         command = raw_input("> ")
         continue
     #go up
-    while v is 1 and command is "w":
+    while v is 1 and command is "s":
         #sets amount of time for motor to run
         now = time.time()
         future = 1 + now
@@ -66,11 +74,11 @@ while z is 0:
                 #breaks loops
                 v = 2
     #return to top of loop if "w"
-    if command is "w":
+    if command is "s":
         command = raw_input("> ")
         continue
     #go down
-    while v is 1 and command is "s":
+    while v is 1 and command is "w":
         #set emount of time for motor to run
         now = time.time()
         future = 1 + now
@@ -83,7 +91,7 @@ while z is 0:
                 print "insert new input, then wait one second before entering another"
                 v = 2
     #return to top of loop if "s"
-    if command is "s":
+    if command is "w":
         command = raw_input("> ")
         continue
     #stops code
