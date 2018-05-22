@@ -10,7 +10,7 @@ screen = curses.initscr()
 #to tell the user valid inputs
 screen.addstr('Hit q to quit. Use the W, A, S, and D to test if code works. Detected key:')
 #to read key inputs
-position = 0
+position = 1600
 key = ''
 #to end loop if 'q' is hit
 while key != ord('q'):
@@ -27,11 +27,15 @@ while key != ord('q'):
         RPL.servoWrite(motor2, 3000)
     if key == ord('s'):
         screen.addstr('s key')
-        position = position + 50
+        if position > 800:
+            position = 3000
+        position = position - 50
         RPL.servoWrite(motor1, position)
     if key == ord('d'):
         screen.addstr('d key')
-        position = position - 50
+        if position < 3000:
+            position = 800
+        position = position + 50
         RPL.servoWrite(motor2, position)
 #to reformat the terminal/end the curses program
 curses.endwin()
