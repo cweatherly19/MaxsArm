@@ -23,21 +23,21 @@ while key != ord('q'):
     #to define what keys preform commands
     if key == ord('w'):
         screen.addstr('w key')
+        duration = time.time() + 0.5
         RPL.servoWrite(motor1, 1000)
-        duration = time.time() + 0.5
     if key == ord('s'):
-        screen.addstr('a key')
-        RPL.servoWrite(motor2, 2000)
+        screen.addstr('s key')
         duration = time.time() + 0.5
+        RPL.servoWrite(motor1, 2000)
     if key == ord('a'):
         screen.addstr('a key')
-        if position > 800:
+        if position < 800:
             position = 3000
         position = position - 50
         RPL.servoWrite(motor2, position)
     if key == ord('d'):
         screen.addstr('d key')
-        if position < 3000:
+        if position > 3000:
             position = 800
         position = position + 50
         RPL.servoWrite(motor2, position)
