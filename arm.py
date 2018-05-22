@@ -31,13 +31,13 @@ while key != ord('q'):
         RPL.servoWrite(motor1, 2000)
     if key == ord('a'):
         screen.addstr('a key')
-        if position < 800:
+        if position is 800:
             position = 3000
         position = position - 50
         RPL.servoWrite(motor2, position)
     if key == ord('d'):
         screen.addstr('d key')
-        if position > 3000:
+        if position is 3000:
             position = 800
         position = position + 50
         RPL.servoWrite(motor2, position)
@@ -45,3 +45,4 @@ while key != ord('q'):
         RPL.servoWrite(motor1, 0)
 #to reformat the terminal/end the curses program
 curses.endwin()
+
