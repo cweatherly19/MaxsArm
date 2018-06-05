@@ -1,43 +1,23 @@
-#to access files needed to run the code
 import curses
-import setup
+import threading
 import RoboPiLib as RPL
-#so define motor ports
-motor1 = 0
-motor2 = 1
-#to define the 'screen' in front of functions
 screen = curses.initscr()
-#to tell the user valid inputs
-screen.addstr('Hit q to quit. Use the W, A, S, and D to test if code works. Detected key:')
-#to read key inputs
-position = 1600
+screen.addstr('press a, then s:')
 key = ''
-#to end loop if 'q' is hit
+keyhold = 0
+def working():
+    RPL.servoWrite(1, 1000)
 while key != ord('q'):
-    #so the key can be read
     key = screen.getch()
     screen.clear()
-    screen.addstr('Hit q to quit. Use the W, A, S, and D to test if code works. Detected key: ')
-    #to define what keys preform commands
-    if key == ord('w'):
-        screen.addstr('w key')
-        RPL.servoWrite(motor1, 1000)
-    if key == ord('s'):
-        screen.addstr('s key')
-        RPL.servoWrite(motor1, 2000)
+    screen.refresh()
+    screen.addstr('press a, then s: ')
     if key == ord('a'):
-        screen.addstr('a key')
-        if position < 800:
-            position = 3000
-        position = position - 50
-        RPL.servoWrite(motor2, position)
-    if key == ord('d'):
-        screen.addstr('d key')
-        if position > 3000:
-            position = 800
-        position = position + 50
-        RPL.servoWrite(motor2, position)
-    RPL.servoWrite(motor1, 0)
-#to reformat the terminal/end the curses program
+        key = keyhold
+    if key == ord('s'):
+        RPL.servoWrite(1, 0)
+        key = 0
+    if key == keyhold:
+        screen.addstr('thinking')
+        threading.Timer(2, working).start()
 curses.endwin()
-
