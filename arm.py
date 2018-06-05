@@ -1,6 +1,7 @@
 import curses
 import threading
 import RoboPiLib as RPL
+RPL.RoboPiInit("/dev/ttyAMA0",115200)
 screen = curses.initscr()
 screen.addstr('press a, then s:')
 key = ''
